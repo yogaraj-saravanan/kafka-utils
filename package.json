@@ -1,0 +1,29 @@
+{
+  "name": "@yogaraj-saravanan/kafka-utils",
+  "version": "1.4.0",
+  "description": "Reusable Kafka producer and consumer utilities using kafkajs.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "kafka",
+    "kafkajs",
+    "producer",
+    "consumer",
+    "nodejs"
+  ],
+  "author": "Yogaraj Saravanan",
+  "license": "MIT",
+  "dependencies": {
+    "kafkajs": "^2.2.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
+  }
+}
