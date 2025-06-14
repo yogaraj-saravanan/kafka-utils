@@ -1,6 +1,6 @@
 {
   "name": "@yogaraj-saravanan/kafka-utils",
-  "version": "1.4.0",
+  "version": "1.7.0",
   "description": "Reusable Kafka producer and consumer utilities using kafkajs.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

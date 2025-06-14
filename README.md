@@ -58,32 +58,38 @@ This package does **not** start Kafka. You must ensure Kafka is already running,
 
 ---
 
-## 🐳 Running Kafka with Docker (Optional)
+## 🐳 Kafka Setup with Docker Compose
 
-To spin up Kafka locally using Docker:
+To run Kafka and Zookeeper locally, copy and paste the following into a `docker-compose.yml` file:
 
-```bash
-docker network create kafka-net
+```yaml
+version: "2"
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.2.1
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:7.2.1
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 ```
 
-```bash
-docker run -d --name zookeeper --network kafka-net -p 2181:2181 bitnami/zookeeper:latest
-```
-
-```bash
-docker run -d --name kafka --network kafka-net -p 9092:9092 \
-  -e KAFKA_BROKER_ID=1 \
-  -e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 \
-  -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 \
-  -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 \
-  bitnami/kafka:latest
-```
-
----
-
-## 🐳 Docker Compose Setup (Recommended)
-
-You can use the included `docker-compose.yml` to start Kafka and Zookeeper easily:
+Then run:
 
 ```bash
 docker-compose up -d
@@ -93,9 +99,6 @@ This will:
 
 - Start **Zookeeper** on port `2181`
 - Start **Kafka** on port `9092`
-- Create a network named `kafka-net`
-
-> Make sure Docker is installed and running before executing this command.
 
 ---
 
